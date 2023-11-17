@@ -33,8 +33,10 @@
       <arg name="load_robot_description" value="true" />
       <arg name="pointer" value="true" />
     </include>
-    <node pkg="tf" type="static_transform_publisher" name="pointer_to_tip_tf" args="0.03 0 -0.06 0 0 0 1 pointer pointer_tip 10" />
-    <node pkg="tf" type="static_transform_publisher" name="pointer_m_to_tip_m_tf" args="-0.03 0 -0.06 0 0 0 1 pointer_m pointer_m_tip 10" />
+
+    <!-- Commented the following two lines since the orign of the pointer is moved to tip in the STL file -->
+    <!--  <node pkg="tf" type="static_transform_publisher" name="pointer_to_tip_tf" args="0.03 0 -0.06 0 0 0 1 pointer pointer_tip 10" />
+    <node pkg="tf" type="static_transform_publisher" name="pointer_m_to_tip_m_tf" args="-0.03 0 -0.06 0 0 0 1 pointer_m pointer_m_tip 10" /> -->
   </group>
 
   <group unless="$(arg pointer)">
@@ -49,6 +51,7 @@
     <include file="$(find industrial_robot_simulator)/launch/robot_interface_simulator.launch">
     </include>
     <include file="$(find abb_irb120_moveit_config)/launch/fake_moveit_controller_manager.launch">
+      <arg name="pointer" value="$(arg pointer)"/>
     </include>
     <!-- <param name="/use_sim_time" value="true"/> -->
   </group>
@@ -62,6 +65,7 @@
       <arg name="pointer" value="$(arg pointer)"/>
     </include>
     <include file="$(find abb_irb120_moveit_config)/launch/dual_arm_moveit_controller_manager.launch">
+      <arg name="pointer" value="$(arg pointer)"/>
     </include>
   </group>
 
